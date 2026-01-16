@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec4 vPosition;
+
+        void
+        main()
+        {
+            gl_Position = vPosition;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        out vec4 fragmentColor;
+
+        void
+        main()
+        {
+            fragmentColor = vec4( 0.0, 0.0, 1.0, 1.0 );
+        }
+    </script>
+
+    <script type="text/javascript" src="Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="Common/initShaders.js"></script>
+    <script type="text/javascript" src="Common/MV.js"></script>
+    <script type="text/javascript" src="Innersquare.js"></script>
+</head>
+
+<body>
+    <canvas id="gl-canvas" width="512" height="512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+    <br />
+    length: 0 <input id="lengthval" type="range" min="0" max="1" step="0.1" value="0.5" /> 1
+    <br />
+    height: 0 <input id="heightval" type="range" min="0" max="1" step="0.1" value="0.5" /> 1
+</body>
+</html>
