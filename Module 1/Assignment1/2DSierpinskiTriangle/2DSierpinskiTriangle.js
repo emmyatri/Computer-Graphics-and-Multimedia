@@ -18,6 +18,10 @@ var numTimesToSubdivide = 0;
 
 var bufferId;
 
+var color = vec4(1.0, 0.0, 0.0, 1.0)
+
+var colorLoc;
+
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
 
@@ -56,12 +60,37 @@ window.onload = function init() {
 
 
 
-    document.getElementById("textval").onchange =
+    document.getElementById("sliderval").oninput =
         function (event) {
-            numTimesToSubdivide = Number(document.getElementById('textval').value);
+            numTimesToSubdivide = event.target.value;
+            var colorValue = parseInt(event.target.value);
+
+            switch (colorValue) {
+                case 0:
+                    color = vec4(1.0, 0.0, 0.0, 1.0);
+                    break;
+                case 1:
+                    color = vec4(1.0, 1.0, 0.0, 1.0);
+                    break;
+                case 2:
+                    color = vec4(0.0, 1.0, 0.0, 1.0);
+                    break;
+                case 3:
+                    color = vec4(0.0, 0.0, 1.0, 1.0);
+                    break;
+                case 4:
+                    color = vec4(0.0, 0.0, 0.0, 1.0);
+                    break;
+                case 5:
+                    color = vec4(0.0, 1.0, 1.0, 1.0);
+                    break;
+            }
+            gl.uniform4fv(colorLoc, color);
             render();
         };
 
+    colorLoc = gl.getUniformLocation(program, "color");
+    gl.uniform4fv(colorLoc, color);
 
     render();
 };
