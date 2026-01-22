@@ -1,10 +1,51 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>3D Sierpinski Gasket</title>
 
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec3 vPosition;
+        in vec3 vColor;
+        out vec4 color;
+
+        void
+        main()
+        {
+            gl_Position = vec4(vPosition, 1.0);
+            color = vec4(vColor, 1.0);
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec4 color;
+        out vec4 fragmentColor;
+
+        void
+        main()
+        {
+            fragmentColor = color;
+        }
+    </script>
+
+    <script type="text/javascript" src="Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="Common/initShaders.js"></script>
+    <script type="text/javascript" src="Common/MV.js"></script>
+    <script type="text/javascript" src="3DSierpinskiTriangle.js"></script>
+</head>
+
+<body>
+    <canvas id="gl-canvas" width="512" height="512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
 </body>
 </html>
