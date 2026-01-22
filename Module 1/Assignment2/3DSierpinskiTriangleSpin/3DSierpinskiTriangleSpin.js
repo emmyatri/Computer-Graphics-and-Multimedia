@@ -13,7 +13,8 @@ var gl;
 
 var points = [];
 var colors = [];
-
+var theta = 0.0;
+var thetaLoc;
 var NumTimesToSubdivide = 3;
 
 window.onload = function init() {
@@ -55,6 +56,9 @@ window.onload = function init() {
     let program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
 
+    thetaLoc = gl.getUniformLocation(program, "theta");
+    gl.uniform1f(thetaLoc, theta);
+
     // Create a buffer object, initialize it, and associate it with the
     //  associated attribute variable in our vertex shader
 
@@ -85,7 +89,7 @@ function triangle(a, b, c, color) {
         vec3(1.0, 0.0, 0.0),
         vec3(0.0, 1.0, 0.0),
         vec3(0.0, 0.0, 1.0),
-        vec3(0.0, 0.0, 0.0)
+        vec3(1.0, 1.0, 0.0)
     ];
 
     colors.push(baseColors[color]);
@@ -106,7 +110,7 @@ function tetra(a, b, c, d) {
     triangle(b, c, d, 3);
 }
 
-function divideTetra(a, b, c, d, count) {
+function divideTetra(a, b, c, d, count) { 
     // check for end of recursion
 
     if (count === 0) {
@@ -131,10 +135,15 @@ function divideTetra(a, b, c, d, count) {
         divideTetra(ac, bc, c, cd, count);
         divideTetra(ad, bd, cd, d, count);
     }
+
+    render();
 }
 
 
 function render() {
+    theta += 0.02
+    gl.uniform1f(thetaLoc, theta)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, points.length);
+    requestAnimationFrame(render);
 }

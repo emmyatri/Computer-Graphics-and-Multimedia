@@ -11,13 +11,22 @@
         precision highp int;
 
         in vec3 vPosition;
+        uniform float theta;
         in vec3 vColor;
         out vec4 color;
+
 
         void
         main()
         {
-            gl_Position = vec4(vPosition, 1.0);
+            float s = sin( theta );
+            float c = cos( theta );
+
+            gl_Position.x = -s * vPosition.y + c * vPosition.x;
+            gl_Position.y =  s * vPosition.x + c * vPosition.y;
+            gl_Position.z = vPosition.z;
+            gl_Position.w = 1.0;
+
             color = vec4(vColor, 1.0);
         }
     </script>
@@ -40,7 +49,7 @@
     <script type="text/javascript" src="Common/webgl-utils.js"></script>
     <script type="text/javascript" src="Common/initShaders.js"></script>
     <script type="text/javascript" src="Common/MV.js"></script>
-    <script type="text/javascript" src="3DSierpinskiTriangle.js"></script>
+    <script type="text/javascript" src="3DSierpinskiTriangleSpin.js"></script>
 </head>
 
 <body>
