@@ -136,13 +136,12 @@ function divideTetra(a, b, c, d, count) {
         divideTetra(ad, bd, cd, d, count);
     }
 
-    render();
 }
 
 
 function render() {
-    theta += 0.02
-    gl.uniform1f(thetaLoc, theta)
+    theta += 0.035;
+    gl.uniform1f(thetaLoc, theta);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, points.length);
     requestAnimationFrame(render);
