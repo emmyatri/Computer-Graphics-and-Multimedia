@@ -61,7 +61,7 @@ window.onload = function init() {
 
     document.getElementById("sliderval").oninput =
         function (event) {
-            speed = Number(event.target.input);
+            speed = Number(event.target.value);
         };
 
 
