@@ -3,7 +3,7 @@
  * Section: 01
  * Name: Amelia Ellingson
  * Professor: Alan Shaw
- * Assignment #: Mod2, Assignment1, Lab2
+ * Assignment #: Mod2, Assignment2, Lab4(Homework)
  */
 
 "use strict";

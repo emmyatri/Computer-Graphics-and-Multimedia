@@ -67,6 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common\initShaders.js" />
+    <Content Include="Common\MV.js" />
+    <Content Include="Common\webgl-utils.js" />
+    <Content Include="SpinningCube.html" />
+    <Content Include="SpinningCube.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

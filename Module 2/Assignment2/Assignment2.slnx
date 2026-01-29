@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Spinning6ColorCube/Spinning6ColorCube.csproj" />
+  <Project Path="Spinning6ColorCubeQuad/Spinning6ColorCubeQuad.csproj" />
+</Solution>
