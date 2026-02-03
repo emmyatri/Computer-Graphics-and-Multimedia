@@ -85,20 +85,57 @@ window.onload = function init() {
 
 
     // vertex array attribute buffer code goes here
+    var vBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices), gl.STATIC_DRAW);
+
+    var vPosition = gl.getAttribLocation(program, "vPosition");
+    gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vPosition);
+
 
 
     // color array attribute buffer code goes here
+    var cBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(vertexColors), gl.STATIC_DRAW);
+
+    var vColor = gl.getAttribLocation(program, "vColor");
+    gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vColor);
 
 
     // thetaLoc uniform variable code goes here
-
+    thetaLoc = gl.getUniformLocation(program, "theta");
+    gl.uniform3fv(thetaLoc, theta);
 
     // button handlers code goes here
+    document.getElementById("xButton").onclick =
+        function () {
+            axis = xAxis;
+        };
+
+    document.getElementById("yButton").onclick =
+        function () {
+            axis = yAxis;
+        };
+
+    document.getElementById("zButton").onclick =
+        function () {
+            axis = zAxis;
+        };
 
 
     render();
 }
 
 function render() {
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    theta[axis] += 2.0;
+    gl.uniform3fv(thetaLoc, theta);
+    requestAnimationFrame(render);
+
+    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_BYTE, 0);
     // render code goes here
 }

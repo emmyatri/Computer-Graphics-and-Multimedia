@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="Spinning6ColorCube/Spinning6ColorCube.csproj" />
-  <Project Path="Spinning6ColorCubeQuad/Spinning6ColorCubeQuad.csproj" />
+  <Project Path="Spinning6ColorCube/Spinning6ColorCube.csproj" Id="35f1eec9-69ee-4520-b52f-52d8a2809321" />
+  <Project Path="Spinning6ColorCubeQuad/Spinning6ColorCubeQuad.csproj" Id="9975176f-48a6-4417-a173-da347ff71d01" />
 </Solution>
