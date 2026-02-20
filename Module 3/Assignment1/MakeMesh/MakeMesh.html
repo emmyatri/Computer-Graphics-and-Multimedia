@@ -28,9 +28,14 @@
         in vec4 fColor;
         out vec4 fragmentColor;
 
+        uniform bool useBlack;
+
         void main()
         {
-            fragmentColor = fColor;
+            if (useBlack)
+                fragmentColor = vec4(0.0, 0.0, 0.0, 1.0);
+            else
+                fragmentColor = fColor;
         }
     </script>
 
@@ -48,7 +53,7 @@
     </div>
     <div>
         <select id="menuval" size="7">
-            <option value="0">Black</option>
+            <option value="0">Aquamarine</option>
             <option value="1">Red</option>
             <option value="2">Yellow</option>
             <option value="3">Green</option>
