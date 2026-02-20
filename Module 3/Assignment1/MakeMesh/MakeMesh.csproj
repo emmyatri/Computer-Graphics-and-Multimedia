@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6ED6B35F-9545-4A61-AE13-1A15A8E5DF7B}</ProjectGuid>
+    <ProjectGuid>{7DEDE4E6-4B2E-47A5-85FC-89F8A07FE340}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StaticCube</RootNamespace>
-    <AssemblyName>StaticCube</AssemblyName>
+    <RootNamespace>MakeMesh</RootNamespace>
+    <AssemblyName>MakeMesh</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -67,11 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common\initShaders.js" />
-    <Content Include="Common\MV.js" />
-    <Content Include="Common\webgl-utils.js" />
-    <Content Include="StaticCube.html" />
-    <Content Include="StaticCube.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +101,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>57619</DevelopmentServerPort>
+          <DevelopmentServerPort>64689</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57619/</IISUrl>
+          <IISUrl>http://localhost:64689/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

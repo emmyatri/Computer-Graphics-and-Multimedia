@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{57F871D5-41DC-434C-8296-789EED91B777}</ProjectGuid>
+    <ProjectGuid>{F498184E-92BC-4FE1-AE33-2911660EE8EE}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpinningCube</RootNamespace>
-    <AssemblyName>SpinningCube</AssemblyName>
+    <RootNamespace>MakePoly</RootNamespace>
+    <AssemblyName>MakePoly</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -67,11 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common\initShaders.js" />
-    <Content Include="Common\MV.js" />
-    <Content Include="Common\webgl-utils.js" />
-    <Content Include="SpinningCube.html" />
-    <Content Include="SpinningCube.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +101,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>55578</DevelopmentServerPort>
+          <DevelopmentServerPort>49703</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55578/</IISUrl>
+          <IISUrl>http://localhost:49703/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
