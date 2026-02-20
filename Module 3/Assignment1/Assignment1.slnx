@@ -1,4 +1,3 @@
 <Solution>
-  <Project Path="SpinningCube/SpinningCube.csproj" Id="57f871d5-41dc-434c-8296-789eed91b777" />
-  <Project Path="StaticCube/StaticCube.csproj" Id="6ed6b35f-9545-4a61-ae13-1a15a8e5df7b" />
+  <Project Path="MakePoly/MakePoly.csproj" />
 </Solution>
