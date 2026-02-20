@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="MakeMesh/MakeMesh.csproj" />
-  <Project Path="MakePoly/MakePoly.csproj" />
+  <Project Path="MakeMesh/MakeMesh.csproj" Id="712228a4-4ec7-4340-8ab5-a7f234a4484b" />
+  <Project Path="MakePoly/MakePoly.csproj" Id="53d7ac74-e4a9-44b8-a0d0-22e00617ed5b" />
 </Solution>
