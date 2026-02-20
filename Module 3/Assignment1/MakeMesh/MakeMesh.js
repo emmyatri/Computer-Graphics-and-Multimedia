@@ -3,7 +3,7 @@
  * Section: 01
  * Name: Amelia Ellingson
  * Professor: Alan Shaw
- * Assignment #: Mod3, Assignment1, Lab1
+ * Assignment #: Mod3, Assignment1, Lab2
  */
 
 
