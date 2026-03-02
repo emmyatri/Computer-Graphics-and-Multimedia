@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CubeShade/CubeShade.csproj" />
+  <Project Path="ShadowShear/ShadowShear.csproj" />
+</Solution>
