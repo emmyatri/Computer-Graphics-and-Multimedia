@@ -42,6 +42,21 @@ var cubeOff1 = [-0.1, 0.2, 0.0];
 var tetraOff1 = [0.6, 0.2, 0.0];
 var octaOff1 = [-0.8, 0.2, 0.0];
 
+var shearAng = [0, 45, 90];
+
+var transMatCube2;
+var transMatOcta2;
+var transMatTetra2;
+
+var cubeOff2 = [0.1, -0.4, 0.5];
+var tetraOff2 = [0.8, -0.4, 0.5];
+var octaOff2 = [-0.6, -0.4, 0.5];
+
+var shearAngLoc;
+var showShearLoc;
+var useBlackLoc;
+
+
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
 
@@ -52,7 +67,7 @@ window.onload = function init() {
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     // clear area of display for rendering at each frame
-    gl.clearColor(0.1, 0.1, 0.1, 1.0);
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
 
     gl.enable(gl.DEPTH_TEST);
 
@@ -122,6 +137,19 @@ window.onload = function init() {
         document.getElementById('xButton').style.background = '#FFF';
         document.getElementById('yButton').style.background = '#FFF';
     };
+
+    transMatCube2 = translate(cubeOff2[0], cubeOff2[1], cubeOff2[2]);
+    transMatTetra2 = translate(tetraOff2[0], tetraOff2[1], tetraOff2[2]);
+    transMatOcta2 = translate(octaOff2[0], octaOff2[1], octaOff2[2]);
+
+    shearAngLoc = gl.getUniformLocation(program, "shearAng");
+    gl.uniform3fv(shearAngLoc, shearAng);
+
+    showShearLoc = gl.getUniformLocation(program, "showShear");
+    gl.uniform1i(showShearLoc, false);
+
+    useBlackLoc = gl.getUniformLocation(program, "useBlack");
+    gl.uniform1i(useBlackLoc, false);
 
     render();
 }
@@ -279,18 +307,48 @@ function render() {
 
     // Render cube
     gl.uniformMatrix4fv(transMatLoc, false, flatten(transMatCube1));
+    gl.uniform1i(useBlackLoc, false);
+    gl.uniform1i(showShearLoc, false);
+    gl.uniformMatrix4fv(scaleMatLoc, false, flatten(scalem(0.5, 0.5, 0.5)));
+    gl.drawArrays(gl.TRIANGLES, 0, totCubePts);
+
+    // Render cube shadow
+    gl.uniformMatrix4fv(transMatLoc, false, flatten(transMatCube2));
+    gl.uniform1i(useBlackLoc, true);
+    gl.uniform1i(showShearLoc, true);
+    gl.uniformMatrix4fv(scaleMatLoc, false, flatten(scalem(0.4, 0.4, 0.4)));
     gl.drawArrays(gl.TRIANGLES, 0, totCubePts);
 
     //----------------
 
     // Render tetrahedron
     gl.uniformMatrix4fv(transMatLoc, false, flatten(transMatTetra1));
+    gl.uniform1i(useBlackLoc, false);
+    gl.uniform1i(showShearLoc, false);
+    gl.uniformMatrix4fv(scaleMatLoc, false, flatten(scalem(0.5, 0.5, 0.5)));
+    gl.drawArrays(gl.TRIANGLES, totCubePts, totTetraPts);
+
+    // Render tetrahedron shadow
+    gl.uniformMatrix4fv(transMatLoc, false, flatten(transMatTetra2));
+    gl.uniform1i(useBlackLoc, true);
+    gl.uniform1i(showShearLoc, true);
+    gl.uniformMatrix4fv(scaleMatLoc, false, flatten(scalem(0.4, 0.4, 0.4)));
     gl.drawArrays(gl.TRIANGLES, totCubePts, totTetraPts);
 
     //----------------
 
     // Render octahedron
     gl.uniformMatrix4fv(transMatLoc, false, flatten(transMatOcta1));
+    gl.uniform1i(useBlackLoc, false);
+    gl.uniform1i(showShearLoc, false);
+    gl.uniformMatrix4fv(scaleMatLoc, false, flatten(scalem(0.5, 0.5, 0.5)));
+    gl.drawArrays(gl.TRIANGLES, totCubePts + totTetraPts, totOctaPts);
+
+    // Render octahedron shadow
+    gl.uniformMatrix4fv(transMatLoc, false, flatten(transMatOcta2));
+    gl.uniform1i(useBlackLoc, true);
+    gl.uniform1i(showShearLoc, true);
+    gl.uniformMatrix4fv(scaleMatLoc, false, flatten(scalem(0.4, 0.4, 0.4)));
     gl.drawArrays(gl.TRIANGLES, totCubePts + totTetraPts, totOctaPts);
 
     requestAnimationFrame(render);

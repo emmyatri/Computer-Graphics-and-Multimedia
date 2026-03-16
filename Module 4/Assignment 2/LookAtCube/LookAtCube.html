@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec4 vPosition;
+        in vec4 vColor;
+        out vec4 fColor;
+
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+
+
+        void main()
+        {
+            fColor = vColor;
+            gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec4 fColor;
+        out vec4 fragmentColor;
+
+        void main()
+        {
+            fragmentColor = fColor;
+        }
+    </script>
+
+    <script type="text/javascript" src="Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="Common/initShaders.js"></script>
+    <script type="text/javascript" src="Common/MV.js"></script>
+    <script type="text/javascript" src="LookAtCube.js"></script>
+</head>
+
+<body>
+    <canvas id="gl-canvas" width="512" height="512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+
+    <br />
+    <button id="perspective" style="background: #AAA">Perspective View</button>
+    <button id="ortho" style="background: #FFF">Orthographic View</button>
+    <br />
+    Fovy: 60<input id="slider_fovy" type="range" min="60" max="160" step="10" value="120" />160
+    </br>
+    X Camera Poition: <button id="leftxcamval">Rotate Left</button>
+    <button id="rightxcamval">Rotate Right</button>
+    <br/>
+    Y Camera Position: -2<input id="slider_ycam" type="range" min="-2.0" max="2.0" step="0.1" value="1.0" />2
+</body>
+</html>
