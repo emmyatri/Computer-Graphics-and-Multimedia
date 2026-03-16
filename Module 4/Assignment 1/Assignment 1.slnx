@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="CubeShade/CubeShade.csproj" />
-  <Project Path="ShadowShear/ShadowShear.csproj" />
+  <Project Path="CubeShade/CubeShade.csproj" Id="3cdc731b-094b-4819-b679-d228cbb60fba" />
+  <Project Path="ShadowShear/ShadowShear.csproj" Id="c7223be5-8d34-4794-af47-3fabd13471ea" />
 </Solution>

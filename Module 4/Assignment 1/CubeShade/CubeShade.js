@@ -1,4 +1,13 @@
-﻿"use strict";
+﻿/*
+ * Course: CS 4722
+ * Section: 01
+ * Name: Amelia Ellingson
+ * Professor: Alan Shaw
+ * Assignment #: Mod4, Assignment1, Lab1
+ */
+
+
+"use strict";
 
 var canvas;
 var gl;
@@ -13,6 +22,36 @@ var zAxis = 2;
 
 var theta = [0.0, 0.0, 0.0];
 var thetaLoc;
+
+var near = 0.1;
+var far = 4;
+var left = -3.0;
+var right = 3.0;
+var ytop = 3.0;
+var bottom = -3.0;
+
+var fovy = 120.0;
+
+var transMatrix, transMatrixLoc;
+var modelViewMatrix, projectionMatrix;
+var modelViewMatrixLoc, projectionMatrixLoc;
+
+var useBlackLoc;
+
+var lightX = -4.0;
+var lightY = 4.0;
+var lightZ = 0.0;
+
+var cubeX = 0.7;
+var cubeY = 0.7;
+var cubeZ = 0.0;
+
+var vColor;
+
+var eye, at, up;
+var light;
+
+var shadowMV;
 
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
@@ -51,6 +90,45 @@ window.onload = function init() {
     gl.enableVertexAttribArray(vColor);
 
     thetaLoc = gl.getUniformLocation(program, "theta");
+
+    document.getElementById("xButton").onclick =
+        function () {
+            axis = xAxis;
+        };
+
+    document.getElementById("yButton").onclick =
+        function () {
+            axis = yAxis;
+        };
+
+    document.getElementById("zButton").onclick =
+        function () {
+            axis = zAxis;
+        };
+
+    light = vec3(lightX, lightY, lightZ);
+
+    // matrix for shadow projection
+    shadowMV = mat4();
+    shadowMV[3][3] = 0;
+    shadowMV[3][1] = -1 / light[1];
+
+    at = vec3(0.0, 0.0, 0.0);
+    up = vec3(0.1, 1.0, 0.0);
+    eye = vec3(-0.9, -1.0, 1.0);
+
+    transMatrix = translate(cubeX, cubeY, cubeZ);
+    transMatrixLoc = gl.getUniformLocation(program, "transMatrix");
+    gl.uniformMatrix4fv(transMatrixLoc, false, flatten(transMatrix));
+
+    modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix");
+    projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
+
+    projectionMatrix = ortho(left, right, bottom, ytop, near, far);
+    gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix));
+
+    useBlackLoc = gl.getUniformLocation(program, "useBlack");
+    gl.uniform1i(useBlackLoc, false);
 
     render();
 }
@@ -109,6 +187,25 @@ function render() {
 
     theta[axis] += 2.0;
     gl.uniform3fv(thetaLoc, theta);
+
+    // model-view matrix for the square
+    modelViewMatrix = lookAt(eye, at, up);
+
+    gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix));
+
+    gl.uniform1i(useBlackLoc, false);
+
+    gl.drawArrays(gl.TRIANGLES, 0, points.length);
+
+    // model-view matrix for the shadow
+    modelViewMatrix = mult(modelViewMatrix, translate(light[0], light[1], light[2]));
+    modelViewMatrix = mult(modelViewMatrix, shadowMV);
+    modelViewMatrix = mult(modelViewMatrix, translate(-light[0], -light[1], -light[2]));
+
+    // send color and matrix for shadow
+    gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix));
+
+    gl.uniform1i(useBlackLoc, true);
 
     gl.drawArrays(gl.TRIANGLES, 0, points.length);
 

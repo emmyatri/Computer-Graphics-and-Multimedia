@@ -10,6 +10,10 @@
         in vec4 vColor;
         out vec4 fColor;
 
+        uniform mat4 transMatrix;
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+
         uniform vec3 theta;
 
         void main()
@@ -38,7 +42,8 @@
 
             fColor = vColor;
 
-            gl_Position = rz * ry * rx * vPosition;
+            gl_Position = projectionMatrix * modelViewMatrix * transMatrix *
+                          rz * ry * rx * vPosition;
             gl_Position.z = -gl_Position.z;
         }
     </script>
@@ -50,10 +55,18 @@
 
         in vec4 fColor;
         out vec4 fragmentColor;
+        uniform bool useBlack;
 
         void main()
         {
+            if (useBlack)
+            {
+            fragmentColor = vec4( 0.0, 0.0, 0.0, 1.0 );
+            }
+        else
+            {
             fragmentColor = fColor;
+            }
         }
     </script>
 
@@ -67,5 +80,12 @@
     <canvas id="gl-canvas" width="512" height="512">
         Oops ... your browser doesn't support the HTML5 canvas element
     </canvas>
+
+    <br/>
+
+    <button id="xButton">Rotate X</button>
+    <button id="yButton">Rotate Y</button>
+    <button id="zButton">Rotate Z</button>
+
 </body>
 </html>
