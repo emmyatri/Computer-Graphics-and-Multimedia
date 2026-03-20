@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LookAtCubePerspective/LookAtCubePerspective.csproj" />
+  <Project Path="TetraToSphere/TetraToSphere.csproj" />
+</Solution>
