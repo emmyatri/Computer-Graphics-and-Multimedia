@@ -24,10 +24,18 @@
         precision highp int;
 
         out vec4 fragmentColor;
+        uniform bool useBlack;
 
         void main()
         {
-            fragmentColor = vec4(0.0, 0.0, 0.0, 1.0);
+            if (useBlack)
+            {
+                fragmentColor = vec4( 0.0, 0.0, 0.0, 1.0 );   // Black color
+            }
+        else
+            {
+                fragmentColor = vec4( 0.0, 1.0, 0.0, 1.0 );   // Green color
+            }
         }
     </script>
 
@@ -41,5 +49,11 @@
     <canvas id="gl-canvas" width="400" height="400">
         Oops ... your browser doesn't support the HTML5 canvas element
     </canvas>
+    <br />
+    <button id="thetaIncrease">Increase Theta</button> <button id="thetaDecrease">Decrease Theta</button>
+    <br />
+    <button id="phiIncrease">Increase Phi</button> <button id="phiDecrease">Decrease Phi</button>
+    <br />
+    <button id="subIncrease">Increase Subdivision</button> <button id="subDecrease">Decrease Subdivison</button>
 </body>
 </html>

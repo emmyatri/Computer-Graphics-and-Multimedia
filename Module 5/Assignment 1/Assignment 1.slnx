@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="LookAtCubePerspective/LookAtCubePerspective.csproj" />
-  <Project Path="TetraToSphere/TetraToSphere.csproj" />
+  <Project Path="LookAtCubePerspective/LookAtCubePerspective.csproj" Id="9eecb56d-ba08-4ef0-b663-2610a2971138" />
+  <Project Path="TetraToSphere/TetraToSphere.csproj" Id="fd194969-6702-4e70-ad02-8b3b3a921942" />
 </Solution>

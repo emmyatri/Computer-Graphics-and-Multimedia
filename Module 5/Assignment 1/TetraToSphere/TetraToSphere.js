@@ -13,7 +13,6 @@ var canvas;
 var gl;
 
 var index = 0;
-
 var pointsArray = [];
 
 var near = -10;
@@ -32,6 +31,13 @@ const at = vec3(0.0, 0.0, 0.0);
 
 var up = vec3(0.0, 1.0, 0.0);
 var eye;
+
+var theta = 0.0;
+var phi = 0.0;
+
+var useBlackLoc;
+
+var numTimesToSubdivide = 0;
 
 
 window.onload = function init() {
@@ -68,6 +74,83 @@ window.onload = function init() {
 
     modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix");
     projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
+
+
+    document.getElementById("thetaIncrease").onclick =
+        function () {
+            theta += 0.1;
+        };
+
+    document.getElementById("thetaDecrease").onclick =
+        function () {
+            theta -= 0.1;
+        };
+
+    document.getElementById("phiIncrease").onclick =
+        function () {
+            phi += 0.1;
+        };
+
+    document.getElementById("phiDecrease").onclick =
+        function () {
+            phi -= 0.1;
+        };
+
+    document.getElementById("subIncrease").onclick =
+        function () {
+            if (numTimesToSubdivide < 6) {
+
+                ++numTimesToSubdivide;
+
+                index = 0;
+                pointsArray = [];
+
+                tetrahedron(va, vb, vc, vd, numTimesToSubdivide);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
+            }
+        };
+
+    document.getElementById("subDecrease").onclick =
+        function () {
+            if (numTimesToSubdivide > 0) {
+
+                --numTimesToSubdivide;
+
+                index = 0;
+                pointsArray = [];
+
+                tetrahedron(va, vb, vc, vd, numTimesToSubdivide);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
+            }
+        };
+
+    document.addEventListener("keydown",
+        function (event) {
+
+            if (event.keyCode == 37) {   // Left Arrow
+                theta += 0.1;
+            }
+
+            if (event.keyCode == 39) {   // Right Arrow
+                theta -= 0.1;
+            }
+
+            if (event.keyCode == 38) {   // Up Arrow
+                phi += 0.1;
+            }
+
+            if (event.keyCode == 40) {   // Down Arrow
+                phi -= 0.1;
+            }
+
+
+            }, false);
+
+    useBlackLoc = gl.getUniformLocation(program, "useBlack");
 
     render();
 }
@@ -108,12 +191,35 @@ function render() {
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    eye = vec3(0, 0, radius);
+    if (theta > 2 * Math.PI)
+        theta -= 2 * Math.PI;
+    if (theta < 0)
+        theta += 2 * Math.PI;
+
+    if (phi > 2 * Math.PI)
+        phi -= 2 * Math.PI;
+    if (phi < 0)
+        phi += 2 * Math.PI;
+
+    if (phi >= Math.PI / 2 && phi < 3 * Math.PI / 2) {
+        up = vec3(0.0, -1.0, 0.0);
+    } else {
+        up = vec3(0.0, 1.0, 0.0);
+    }
+
+    eye = vec3(radius * Math.sin(theta) * Math.cos(phi),
+        radius * Math.sin(phi),
+        radius * Math.cos(theta) * Math.cos(phi));
+
     modelViewMatrix = lookAt(eye, at, up);
     projectionMatrix = ortho(left, right, bottom, ytop, near, far);
 
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix));
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix));
+
+    gl.uniform1i(useBlackLoc, false);
+    gl.drawArrays(gl.TRIANGLES, 0, pointsArray.length);
+    gl.uniform1i(useBlackLoc, true);
 
     for (let i = 0; i < index; i += 3)
         gl.drawArrays(gl.LINE_LOOP, i, 3);
