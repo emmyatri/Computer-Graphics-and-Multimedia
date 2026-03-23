@@ -38,6 +38,61 @@ var useBlackLoc;
 
 var numTimesToSubdivide = 0;
 
+var theta = 0.0;
+var phi = 0.0;
+
+var numTimesToSubdivide = 0;
+
+var normalsArray = [];
+
+var lightPosition = vec4(1.0, 1.0, 1.0, 0.0);
+var lightAmbient = vec4(0.2, 0.2, 0.2, 1.0);
+var lightDiffuse = vec4(1.0, 1.0, 1.0, 1.0);
+var lightSpecular = vec4(1.0, 1.0, 1.0, 1.0);
+
+var materialAmbient = [
+    vec4(1.0, 0.0, 0.0, 0.0),
+    vec4(1.0, 1.0, 0.0, 0.0),
+    vec4(0.0, 1.0, 0.0, 0.0),
+    vec4(0.0, 0.0, 1.0, 0.0),
+    vec4(1.0, 0.0, 1.0, 0.0),
+    vec4(0.0, 1.0, 1.0, 0.0)
+];
+
+var materialDiffuse = [
+    vec4(0.8, 0.0, 0.0, 0.0),
+    vec4(1.0, 0.8, 0.0, 0.0),
+    vec4(0.0, 0.8, 0.0, 0.0),
+    vec4(0.0, 0.0, 0.8, 0.0),
+    vec4(1.0, 0.0, 0.8, 0.0),
+    vec4(0.0, 1.0, 0.8, 0.0)
+];
+
+var materialSpecular = [
+    vec4(0.8, 0.0, 0.0, 0.0),
+    vec4(1.0, 0.8, 0.0, 0.0),
+    vec4(0.0, 0.8, 0.0, 0.0),
+    vec4(0.0, 0.0, 0.8, 0.0),
+    vec4(1.0, 0.0, 0.8, 0.0),
+    vec4(0.0, 1.0, 0.8, 0.0)
+];
+
+var materialShininess = 100.0;
+
+var ambientProduct;
+var diffuseProduct;
+var specularProduct;
+
+var ambientLoc;
+var diffuseLoc;
+var specularLoc;
+var lightLoc;
+var shininessLoc;
+
+var colorIndex = 0;
+
+var goRight = true;
+
 
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
@@ -74,26 +129,29 @@ window.onload = function init() {
     modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix");
     projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
 
+    let nBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, nBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(normalsArray), gl.STATIC_DRAW);
 
-    document.getElementById("thetaIncrease").onclick =
-        function () {
-            theta += 0.1;
-        };
+    let vNormal = gl.getAttribLocation(program, "vNormal");
+    gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vNormal);
 
-    document.getElementById("thetaDecrease").onclick =
-        function () {
-            theta -= 0.1;
-        };
+    ambientProduct = mult(lightAmbient, materialAmbient[colorIndex]);
+    diffuseProduct = mult(lightDiffuse, materialDiffuse[colorIndex]);
+    specularProduct = mult(lightSpecular, materialSpecular[colorIndex]);
 
-    document.getElementById("phiIncrease").onclick =
-        function () {
-            phi += 0.1;
-        };
+    ambientLoc = gl.getUniformLocation(program, "ambientProduct");
+    diffuseLoc = gl.getUniformLocation(program, "diffuseProduct");
+    specularLoc = gl.getUniformLocation(program, "specularProduct");
+    lightLoc = gl.getUniformLocation(program, "lightPosition");
+    shininessLoc = gl.getUniformLocation(program, "shininess");
 
-    document.getElementById("phiDecrease").onclick =
-        function () {
-            phi -= 0.1;
-        };
+    gl.uniform4fv(ambientLoc, flatten(ambientProduct));
+    gl.uniform4fv(diffuseLoc, flatten(diffuseProduct));
+    gl.uniform4fv(specularLoc, flatten(specularProduct));
+    gl.uniform4fv(lightLoc, flatten(lightPosition));
+    gl.uniform1f(shininessLoc, materialShininess);
 
     document.getElementById("subIncrease").onclick =
         function () {
@@ -103,11 +161,15 @@ window.onload = function init() {
 
                 index = 0;
                 pointsArray = [];
+                normalsArray = [];
 
                 tetrahedron(va, vb, vc, vd, numTimesToSubdivide);
 
                 gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
                 gl.bufferData(gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, nBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, flatten(normalsArray), gl.STATIC_DRAW);
             }
         };
 
@@ -119,37 +181,55 @@ window.onload = function init() {
 
                 index = 0;
                 pointsArray = [];
+                normalsArray = [];
 
                 tetrahedron(va, vb, vc, vd, numTimesToSubdivide);
 
                 gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
                 gl.bufferData(gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, nBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, flatten(normalsArray), gl.STATIC_DRAW);
             }
         };
 
     document.addEventListener("keydown",
         function (event) {
 
-            if (event.keyCode == 37) {   // Left Arrow
+            if (event.keyCode == 65 || event.keyCode == 37) {   // A or Left Arrow
                 theta += 0.1;
             }
 
-            if (event.keyCode == 39) {   // Right Arrow
+            if (event.keyCode == 68 || event.keyCode == 39) {   // D or Right Arrow
                 theta -= 0.1;
             }
 
-            if (event.keyCode == 38) {   // Up Arrow
+            if (event.keyCode == 87 || event.keyCode == 38) {   // W or Up Arrow
                 phi += 0.1;
             }
 
-            if (event.keyCode == 40) {   // Down Arrow
+            if (event.keyCode == 83 || event.keyCode == 40) {   // S or Down Arrow
                 phi -= 0.1;
             }
 
 
         }, false);
 
-    useBlackLoc = gl.getUniformLocation(program, "useBlack");
+    document.getElementById("colors").oninput =
+        function (event) {
+            colorIndex = event.target.value;
+
+            ambientProduct = mult(lightAmbient, materialAmbient[colorIndex]);
+            diffuseProduct = mult(lightDiffuse, materialDiffuse[colorIndex]);
+            specularProduct = mult(lightSpecular, materialSpecular[colorIndex]);
+
+            gl.uniform4fv(ambientLoc, flatten(ambientProduct));
+            gl.uniform4fv(diffuseLoc, flatten(diffuseProduct));
+            gl.uniform4fv(specularLoc, flatten(specularProduct));
+        };
+
+
+
 
     render();
 }
@@ -159,6 +239,14 @@ function triangle(a, b, c) {
     pointsArray.push(b);
     pointsArray.push(c);
     index += 3;
+
+    let t1 = subtract(a, b);
+    let t2 = subtract(a, c);
+    let normal = cross(t1, t2);
+
+    normalsArray.push(normal);
+    normalsArray.push(normal);
+    normalsArray.push(normal);
 }
 
 
@@ -216,12 +304,20 @@ function render() {
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix));
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix));
 
-    gl.uniform1i(useBlackLoc, false);
-    gl.drawArrays(gl.TRIANGLES, 0, pointsArray.length);
-    gl.uniform1i(useBlackLoc, true);
+    if (goRight) {
+        lightPosition[0] += 0.1;
+        if (lightPosition[0] > 5) {
+            goRight = false;
+        }
+    } else if (!goRight) {
+        lightPosition[0] -= 0.1;
+        if (lightPosition[0] < 0) {
+            goRight = true;
+        }
+    }
+    gl.uniform4fv(lightLoc, flatten(lightPosition));
 
-    for (let i = 0; i < index; i += 3)
-        gl.drawArrays(gl.LINE_LOOP, i, 3);
+    gl.drawArrays(gl.TRIANGLES, 0, pointsArray.length);
 
     window.requestAnimFrame(render);
 }

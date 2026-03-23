@@ -3,18 +3,53 @@
 
 <head>
     <script id="vertex-shader" type="x-shader/x-vertex">
-        #version 300 es
+            #version 300 es
         precision highp float;
         precision highp int;
 
         in vec4 vPosition;
+        in vec3 vNormal;
+        out vec4 fColor;
 
+        uniform vec4 ambientProduct, diffuseProduct, specularProduct;
         uniform mat4 modelViewMatrix;
         uniform mat4 projectionMatrix;
+        uniform vec4 lightPosition;
+        uniform float shininess;
 
         void main()
         {
+            vec3 pos = -(modelViewMatrix * vPosition).xyz;
+
+            //fixed light postion
+            vec3 light = lightPosition.xyz;
+            vec3 L = normalize( light - pos );
+
+            vec3 E = normalize( -pos );
+            vec3 H = normalize( L + E );
+
+            vec4 NN = vec4(vNormal,0);
+
+            // Transform vertex normal into eye coordinates
+
+            vec3 N = normalize( (modelViewMatrix*NN).xyz);
+
+            // Compute terms in the illumination equation
+            vec4 ambient = ambientProduct;
+
+            float Kd = max( dot(L, N), 0.0 );
+            vec4  diffuse = Kd*diffuseProduct;
+
+            float Ks = pow( max(dot(N, H), 0.0), shininess );
+            vec4  specular = Ks * specularProduct;
+
+            if( dot(L, N) < 0.0 ) {
+                specular = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+
             gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+            fColor = ambient + diffuse + specular;
+            fColor.a = 1.0;
         }
     </script>
 
@@ -24,18 +59,11 @@
         precision highp int;
 
         out vec4 fragmentColor;
-        uniform bool useBlack;
+        in vec4 fColor;
 
         void main()
         {
-            if (useBlack)
-            {
-                fragmentColor = vec4( 0.0, 0.0, 0.0, 1.0 );   // Black color
-            }
-        else
-            {
-                fragmentColor = vec4( 0.0, 1.0, 0.0, 1.0 );   // Green color
-            }
+            fragmentColor = fColor;
         }
     </script>
 
@@ -50,10 +78,15 @@
         Oops ... your browser doesn't support the HTML5 canvas element
     </canvas>
     <br />
-    <button id="thetaIncrease">Increase Theta</button> <button id="thetaDecrease">Decrease Theta</button>
-    <br />
-    <button id="phiIncrease">Increase Phi</button> <button id="phiDecrease">Decrease Phi</button>
-    <br />
     <button id="subIncrease">Increase Subdivision</button> <button id="subDecrease">Decrease Subdivison</button>
+    <br />
+    <select id="colors" size="6">
+        <option value="0">Red</option>
+        <option value="1">Yellow</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        <option value="4">Magenta</option>
+        <option value="5">Cyan</option>
+    </select>
 </body>
 </html>
