@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec4 vPosition;
+
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+
+        void main()
+        {
+            gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        out vec4 fragmentColor;
+        uniform bool useBlack;
+
+        void main()
+        {
+            if (useBlack)
+            {
+                fragmentColor = vec4( 0.0, 0.0, 0.0, 1.0 );   // Black color
+            }
+        else
+            {
+                fragmentColor = vec4( 0.0, 1.0, 0.0, 1.0 );   // Green color
+            }
+        }
+    </script>
+
+    <script type="text/javascript" src="Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="Common/initShaders.js"></script>
+    <script type="text/javascript" src="Common/MV.js"></script>
+    <script type="text/javascript" src="TetraToSphereWithLight.js"></script>
+</head>
+
+<body>
+    <canvas id="gl-canvas" width="400" height="400">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+    <br />
+    <button id="thetaIncrease">Increase Theta</button> <button id="thetaDecrease">Decrease Theta</button>
+    <br />
+    <button id="phiIncrease">Increase Phi</button> <button id="phiDecrease">Decrease Phi</button>
+    <br />
+    <button id="subIncrease">Increase Subdivision</button> <button id="subDecrease">Decrease Subdivison</button>
+</body>
+</html>
