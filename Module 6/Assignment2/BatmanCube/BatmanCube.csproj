@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3FCA65D9-EBC7-4401-8BFB-3C3A9420C625}</ProjectGuid>
+    <ProjectGuid>{050E5EDC-22E8-42D2-9634-8607D9D59BC4}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlanetShader</RootNamespace>
-    <AssemblyName>PlanetShader</AssemblyName>
+    <RootNamespace>BatmanCube</RootNamespace>
+    <AssemblyName>BatmanCube</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -67,11 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BatmanCube.html" />
+    <Content Include="BatmanCube.js" />
     <Content Include="Common\initShaders.js" />
     <Content Include="Common\MV.js" />
     <Content Include="Common\webgl-utils.js" />
-    <Content Include="PlanetShader.html" />
-    <Content Include="PlanetShader.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -109,9 +109,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>62228</DevelopmentServerPort>
+          <DevelopmentServerPort>61521</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62228/</IISUrl>
+          <IISUrl>http://localhost:61521/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

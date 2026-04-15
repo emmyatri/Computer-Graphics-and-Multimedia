@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec4 vPosition;
+        in vec2 vTexCoord;
+        out vec2 fTexCoord;
+
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+
+        void main()
+        {
+            gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+            fTexCoord = vTexCoord;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec2 fTexCoord;
+        out vec4 fragmentColor;
+
+        uniform sampler2D sampTexture;
+
+        void main()
+        {
+            fragmentColor = texture(sampTexture, fTexCoord);
+        }
+    </script>
+
+    <script type="text/javascript" src="Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="Common/initShaders.js"></script>
+    <script type="text/javascript" src="Common/MV.js"></script>
+    <script type="text/javascript" src="MoonOrbit.js"></script>
+</head>
+
+<body>
+    <canvas id="gl-canvas" width="512" height="512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+    <br />
+
+    <select id="imageVal" size="2">
+        <option value="moonImage" selected="selected">Moon</option>
+        <option value="earthImage">Earth</option>
+    </select>
+
+    <img id="earthImage" src="images/earth.png" hidden />
+    <img id="moonImage" src="images/moon.png" hidden />
+
+</body>
+</html>

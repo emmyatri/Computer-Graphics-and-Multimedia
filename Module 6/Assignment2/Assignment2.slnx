@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BatmanCube/BatmanCube.csproj" />
+  <Project Path="MoonOrbit/MoonOrbit.csproj" />
+</Solution>
