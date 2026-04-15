@@ -55,11 +55,18 @@
         out vec4 fragmentColor;
 
         uniform sampler2D sampTexture;
+        uniform bool drawBlack;
 
-        void
-        main()
+        void main()
         {
-            fragmentColor = fColor * texture( sampTexture, fTexCoord );
+            if (drawBlack)
+            {
+                fragmentColor = vec4( 0.0, 0.0, 0.0, 1.0 );
+            }
+            else
+            {
+                fragmentColor = fColor * texture( sampTexture, fTexCoord );
+            }
         }
     </script>
 
@@ -73,17 +80,18 @@
     <canvas id="gl-canvas" width="512" height="512">
         Oops ... your browser doesn't support the HTML5 canvas element
     </canvas>
-    <img id="animImage1" src="images/character1sprites.png" hidden />
-    <img id="animImage2" src="images/character2sprites.png" hidden />
-    <img id="animImage3" src="images/character3sprites.png" hidden />
-    <img id="animImage4" src="images/character4sprites.png" hidden />
-    <img id="animImage5" src="images/character5sprites.png" hidden />
-    <img id="animImage6" src="images/character6sprites.png" hidden />
     <br />
     <button id="ButtonX">Rotate X</button>
     <button id="ButtonY">Rotate Y</button>
     <button id="ButtonZ">Rotate Z</button>
     <button id="togglerotation">Toggle Rotation</button>
     <button id="toggleanimation">Toggle Animation</button>
+
+    <img id="animImage1" src="images/character1sprites.png" hidden />
+    <img id="animImage2" src="images/character2sprites.png" hidden />
+    <img id="animImage3" src="images/character3sprites.png" hidden />
+    <img id="animImage4" src="images/character4sprites.png" hidden />
+    <img id="animImage5" src="images/character5sprites.png" hidden />
+    <img id="animImage6" src="images/character6sprites.png" hidden />
 </body>
 </html>

@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="BatmanCube/BatmanCube.csproj" />
-  <Project Path="MoonOrbit/MoonOrbit.csproj" />
+  <Project Path="BatmanCube/BatmanCube.csproj" Id="050e5edc-22e8-42d2-9634-8607d9d59bc4" />
+  <Project Path="MoonOrbit/MoonOrbit.csproj" Id="c1b9e823-326e-44a9-a349-43228a995353" />
 </Solution>
