@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="ObjManager/ObjManager.csproj" />
+  <Project Path="PlanetShader/PlanetShader.csproj" />
 </Solution>
