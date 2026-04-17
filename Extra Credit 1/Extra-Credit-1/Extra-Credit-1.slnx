@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="GlowShader/GlowShader.csproj" />
+  <Project Path="NormalShader/NormalShader.csproj" />
+  <Project Path="ToonLikeShader/ToonLikeShader.csproj" />
+</Solution>

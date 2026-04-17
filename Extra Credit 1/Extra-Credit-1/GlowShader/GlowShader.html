@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec4 vPosition;
+        in vec3 vNormal;
+        in vec3 vColor;
+
+        uniform vec3 glowColor;
+
+        out vec4 fColor;
+
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+
+        void main()
+        {
+            gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+
+            float glowNorm = sqrt(vNormal.x * vNormal.x + vNormal.y * vNormal.y);
+
+            float glowFactor = pow(glowNorm,4.0);
+
+            fColor = vec4(glowFactor * glowColor + (1.0 - glowFactor) * vColor, 1.0);
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        #version 300 es
+        precision highp float;
+        precision highp int;
+
+
+        out vec4 fragmentColor;
+
+        in vec4 fColor;
+
+        void main()
+        {
+            fragmentColor = fColor;
+        }
+    </script>
+
+    <script type="text/javascript" src="Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="Common/initShaders.js"></script>
+    <script type="text/javascript" src="Common/MV.js"></script>
+    <script type="text/javascript" src="GlowShader.js"></script>
+</head>
+
+<body>
+    <canvas id="gl-canvas" width="512" height="512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+
+</body>
+</html>
