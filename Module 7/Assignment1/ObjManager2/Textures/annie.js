@@ -1,0 +1,56 @@
+# Blender MTL File: 'Annie.blend'
+# Material Count: 5
+
+newmtl ann000_buki.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ann000_buki.png
+
+newmtl ann000_eye00.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ann000_eye00.png
+map_Ks ann000_eye00.png
+
+newmtl ann000_mouth00.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ann000_mouth00.png
+map_Ks ann000_mouth00.png
+
+newmtl ann000_skin00.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ann000_skin00.png
+map_Ks ann000_skin00.png
+
+newmtl ann000_skin01.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ann000_skin01.png
+map_Ks ann000_skin01.png

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ShadowMap/ShadowMap.csproj" />
+  <Project Path="ShadowMap2/ShadowMap2.csproj" />
+</Solution>
